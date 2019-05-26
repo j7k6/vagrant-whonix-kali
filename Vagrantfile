@@ -16,6 +16,7 @@ Vagrant.configure("2") do |config|
     end
 
     whonix.vm.provision :shell, inline: <<-SCRIPT
+      sleep 30
       iptables -I INPUT -i eth1 -p udp --dport 67 --sport 68 -j ACCEPT
     SCRIPT
   end
