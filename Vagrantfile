@@ -8,6 +8,7 @@ Vagrant.configure("2") do |config|
     whonix.vm.network :forwarded_port, guest: 22, host: 2200, id: "ssh", disabled: true
     whonix.vm.network :forwarded_port, guest: 22, host: 2219
     whonix.ssh.username = "root"
+    whonix.vm.synced_folder ".", "/vagrant", disabled: true
 
     whonix.vm.provider "virtualbox" do |vb|
       vb.memory = 512
@@ -21,14 +22,15 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "kali" do |kali|
     kali.vm.box = "offensive-security/kali-linux"
-    kali.vm.network :private_network, auto_config: false, virtualbox__intnet: "Whonix", adapter: 1
+    kali.vm.network :private_network, virtualbox__intnet: "Whonix", adapter: 1
     kali.vm.network :forwarded_port, guest: 22, host: 2200, id: "ssh", disabled: true
     kali.ssh.host = "10.152.152.11"
     kali.ssh.proxy_command = "ssh root@127.0.0.1 -p 2219 -o StrictHostKeyChecking=no -i " + File.join(Dir.pwd(), '.vagrant/machines/whonix/virtualbox/private_key') + " nc %h %p"
+    kali.vm.synced_folder ".", "/vagrant", disabled: true
 
     kali.vm.provider "virtualbox" do |vb|
       vb.memory = 4096
-      vb.cpus = 4
+      vb.cpus = 2
       vb.gui = true
     end
 
