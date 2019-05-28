@@ -1,4 +1,7 @@
 *.sw[o|p]
 *.tmp
 *.box
+*.ova
+*virtualbox*
+*output*
 .vagrant

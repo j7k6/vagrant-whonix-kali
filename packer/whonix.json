@@ -1,0 +1,53 @@
+{
+  "variables": {
+    "cloud_token": "{{env `ATLAS_TOKEN`}}",
+    "version": "14.0.1.4.4"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "source_path": "Whonix-CLI-{{user `version`}}.ova",
+      "format": "ova",
+      "import_flags": ["--vsys", "0", "--eula", "accept", "--vsys", "1", "--eula", "accept"],
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "boot_wait": "30s",
+      "boot_command": [
+        "root<enter><wait>",
+        "changeme<enter><wait20>",
+        "<left><enter><wait>",
+        "<left><enter><wait>",
+        "<enter><wait><enter><wait5><enter><wait180>",
+        "apt-get install -y openssh-server netcat<enter><wait60>",
+        "apt-get clean<enter><wait>",
+        "sed -i 's/GATEWAY_ALLOW_INCOMING_SSH=0/GATEWAY_ALLOW_INCOMING_SSH=1/' /etc/whonix_firewall.d/30_whonix_gateway_default.conf<enter><wait>",
+        "/usr/bin/whonix_firewall<enter><wait5>",
+        "adduser --gecos '' --disabled-password vagrant<enter><wait>",
+        "echo 'vagrant:vagrant' | chpasswd<enter><wait>",
+        "usermod -aG sudo vagrant<enter><wait>",
+        "sed -i 's/^%sudo.*/%sudo ALL=NOPASSWD:ALL/' /etc/sudoers<enter><wait>",
+        "mkdir -p /home/vagrant/.ssh<enter><wait>",
+        "curl -fsSL https://raw.github.com/hashicorp/vagrant/master/keys/vagrant.pub > /home/vagrant/.ssh/authorized_keys<enter><wait15>",
+        "chown -R vagrant:vagrant /home/vagrant/.ssh<enter><wait>",
+        "systemctl enable --now ssh<enter>"
+      ]
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "vagrant"
+      },
+      {
+        "type": "vagrant-cloud",
+        "box_tag": "j7k6/whonix-gateway",
+        "access_token": "{{user `cloud_token`}}",
+        "version": "{{user `version`}}"
+      },
+      {
+        "type": "shell-local",
+        "command": "VBoxManage unregistervm 'Whonix-Workstation-CLI' --delete"
+      }
+    ]
+  ]
+}
