@@ -1,3 +1,4 @@
 [submodule "packer-whonix-kali"]
 	path = packer-whonix-kali
 	url = https://github.com/j7k6/packer-whonix-kali
+  branch = master
