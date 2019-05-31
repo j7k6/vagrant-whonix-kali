@@ -4,8 +4,15 @@
 - VirtualBox
 - Vagrant
 
-## Run
+## Build Vagrant Boxes
+```
+cd packer/
+packer build whonix.json
+packer build kali.json
+```
+
+## Run Vagrant Boxes
 ```bash
-vagrant up whonix && vagrant up kali
+vagrant up
 ```
 
