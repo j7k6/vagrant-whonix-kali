@@ -34,7 +34,8 @@
         "type": "shell-local",
         "inline": [
           "vagrant box remove --force '{{user `tag`}}' || true",
-          "vagrant box add --name '{{user `tag`}}' 'file://packer_virtualbox-ovf_virtualbox.box'"
+          "vagrant box add --name '{{user `tag`}}' 'file://packer_virtualbox-ovf_virtualbox.box'",
+          "rm '~/.vagrant.d/boxes/{{user `tag`}}/0/virtualbox/Vagrantfile' || true"
         ]
       }
     ]
