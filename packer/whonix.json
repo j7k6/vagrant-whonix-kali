@@ -23,7 +23,7 @@
         "<left><enter><wait>",
         "<left><enter><wait>",
         "<enter><wait><enter><wait10><enter><wait240>",
-        "curl -fsSL 'https://raw.github.com/j7k6/packer-whonix-kali/master/whonix-bootstrap.sh' | bash -s<enter><wait180>"
+        "curl -fsSL 'https://raw.github.com/j7k6/vagrant-whonix-kali/master/packer/whonix-bootstrap.sh' | bash -s<enter><wait180>"
       ]
     }
   ],
