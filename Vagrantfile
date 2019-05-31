@@ -23,8 +23,6 @@ Vagrant.configure("2") do |config|
     kali.vm.network :forwarded_port, guest: 22, host: 2200, id: "ssh", disabled: true
     kali.vm.synced_folder ".", "/vagrant", disabled: true
     kali.ssh.host = "10.152.152.11"
-    kali.ssh.private_key_path = "~/.vagrant.d/insecure_private_key"
-    kali.ssh.insert_key = false
     kali.ssh.proxy_command = "ssh vagrant@127.0.0.1 -p 2219 " \
       "-o StrictHostKeyChecking=no " \
       "-o UserKnownHostsFile=/dev/null " \
