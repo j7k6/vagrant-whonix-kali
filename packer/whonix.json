@@ -1,9 +1,7 @@
 {
   "variables": {
-    "cloud_token": "{{env `ATLAS_TOKEN`}}",
     "ova_source": "{{env `WHONIX_OVA`}}",
-    "tag": "j7k6/whonix-gateway",
-    "version": "14.0.1.4.4"
+    "tag": "whonix-gateway"
   },
   "builders": [
     {
@@ -33,10 +31,11 @@
         "type": "vagrant"
       },
       {
-        "type": "vagrant-cloud",
-        "box_tag": "{{user `tag`}}",
-        "access_token": "{{user `cloud_token`}}",
-        "version": "{{user `version`}}"
+        "type": "shell-local",
+        "inline": [
+          "vagrant box remove --force '{{user `tag`}}' || true",
+          "vagrant box add --name '{{user `tag`}}' 'file://packer_virtualbox-ovf_virtualbox.box'"
+        ]
       }
     ]
   ]

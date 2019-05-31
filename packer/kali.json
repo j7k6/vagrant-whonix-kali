@@ -1,7 +1,6 @@
 {
   "variables": {
-    "cloud_token": "{{env `ATLAS_TOKEN`}}",
-    "tag": "j7k6/kali-linux",
+    "tag": "kali-linux",
     "version": "2019.2.0"
   },
   "builders": [
@@ -26,10 +25,11 @@
   ],
   "post-processors": [
     {
-      "type": "vagrant-cloud",
-      "box_tag": "{{user `tag`}}",
-      "access_token": "{{user `cloud_token`}}",
-      "version": "{{user `version`}}"
+      "type": "shell-local",
+      "inline": [
+        "vagrant box remove --force '{{user `tag`}}' || true",
+        "vagrant box add --name '{{user `tag`}}' 'file://output-vagrant/package.box'"
+      ]
     }
   ]
 }
