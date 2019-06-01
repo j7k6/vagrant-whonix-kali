@@ -6,12 +6,16 @@
 
 ## Build Vagrant Boxes
 ```
-cd packer/
+cd packer/whonix
 export PACKER_LOG=1
 export WHONIX_OVA=~/Downloads/Whonix-CLI-14.0.1.4.4.ova
-export KALI_OVA=~/Downloads/kali-linux-2019.2-vbox-amd64.ova
-
 packer build whonix.json
+
+---
+
+cd packer/whonix
+export PACKER_LOG=1
+export KALI_OVA=~/Downloads/kali-linux-2019.2-vbox-amd64.ova
 packer build kali.json
 ```
 
