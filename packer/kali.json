@@ -12,7 +12,7 @@
       "ssh_password": "vagrant",
       "boot_wait": "60s",
       "boot_command": [
-        "<leftAltOn><leftCtrlOn><f3><leftAltOff><leftCtrlOff><wait20>",
+        "<leftAltOn><leftCtrlOn><f3><leftAltOff><leftCtrlOff><wait30>",
         "root<enter><wait>",
         "toor<enter><wait10>",
         "curl -fsSL 'https://raw.github.com/j7k6/vagrant-whonix-kali/master/packer/kali-bootstrap.sh' | bash -s<enter><wait30>"
