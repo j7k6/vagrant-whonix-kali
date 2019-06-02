@@ -8,23 +8,15 @@
       "type": "virtualbox-ovf",
       "source_path": "{{user `ova_source`}}",
       "format": "ova",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
+      "communicator": "none",
+      "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
       "boot_wait": "60s",
       "boot_command": [
         "<leftAltOn><leftCtrlOn><f3><leftAltOff><leftCtrlOff><wait30>",
         "root<enter><wait>",
         "toor<enter><wait10>",
         "curl -fsSL 'https://raw.github.com/j7k6/vagrant-whonix-kali/master/packer/kali/kali-bootstrap.sh' | bash -s<enter><wait30>"
-      ]
-    }
-  ],
-   "provisioners": [
-    {
-      "type": "shell",
-      "expect_disconnect": true,
-      "inline": [
-        "sudo nmcli connection modify 'Wired connection 1' ipv4.method manual ipv4.addresses 10.152.152.11/18 ipv4.gateway 10.152.152.10 ipv4.dns 10.152.152.10"
       ]
     }
   ],
