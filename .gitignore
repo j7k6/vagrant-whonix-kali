@@ -1,3 +1,4 @@
+.DS_Store
 *.sw[o|p]
 *.tmp
 *.box
@@ -6,3 +7,4 @@
 *output*
 .vagrant
 packer_cache
+kali.passwd

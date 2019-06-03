@@ -10,6 +10,7 @@ Vagrant.configure("2") do |config|
     whonix.vm.synced_folder ".", "/vagrant", disabled: true
 
     whonix.vm.provider "virtualbox" do |vb|
+      vb.name = "whonix-gateway"
       vb.memory = 256
       vb.cpus = 1
     end
@@ -29,9 +30,16 @@ Vagrant.configure("2") do |config|
       "-i " + File.join(Dir.pwd(), ".vagrant/machines/whonix/virtualbox/private_key") + " nc -q0 %h %p"
 
     kali.vm.provider "virtualbox" do |vb|
+      vb.name = "kali-linux"
       vb.memory = 4096
       vb.cpus = 2
       vb.gui = true
+    end
+
+    kali.trigger.after :up do |trigger|
+      trigger.run = {
+        path: "kali-encrypt.sh"
+      }
     end
 
     kali.vm.provision :shell, path: "provision.sh"
