@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
       vb.cpus = 1
     end
 
-    whonix.vm.provision :shell, path: "provision.sh"
+    whonix.vm.provision :shell, path: "scripts/provision.sh"
   end
 
   config.vm.define "kali" do |kali|
@@ -38,10 +38,10 @@ Vagrant.configure("2") do |config|
 
     kali.trigger.after :up do |trigger|
       trigger.run = {
-        path: "kali-encrypt.sh"
+        path: "scripts/kali-encrypt.sh"
       }
     end
 
-    kali.vm.provision :shell, path: "provision.sh"
+    kali.vm.provision :shell, path: "scripts/provision.sh"
   end
 end
