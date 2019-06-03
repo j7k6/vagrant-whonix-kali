@@ -20,6 +20,13 @@ packer build kali.json
 ```
 
 ## Run Vagrant Boxes
-```bash
-vagrant up
-```
+
+1. (Optional) Enable Kali VM Encryption:
+   ```bash
+   echo "<PASSWORD>" > kali.passwd
+   ```
+
+2. Run:
+   ```bash
+   vagrant up
+   ```
