@@ -1,10 +1,8 @@
 {
   "variables": {
-    "cloud_token": "{{env `ATLAS_TOKEN`}}",
     "ova_source": "{{env `KALI_OVA`}}",
     "name": "kali-linux",
-    "tag": "j7k6/{{user `name`}}",
-    "version": "2019.2.0"
+    "tag": "j7k6/{{user `name`}}"
   },
   "builders": [
     {
@@ -35,12 +33,6 @@
           "vagrant box remove --force '{{user `tag`}}' || true",
           "vagrant box add --name '{{user `tag`}}' 'file://{{user `name`}}.box'"
         ]
-      },
-      {
-				"type": "vagrant-cloud",
-				"box_tag": "{{user `tag`}}",
-				"access_token": "{{user `cloud_token`}}",
-				"version": "{{user `version`}}"
       }
     ]
   ]
