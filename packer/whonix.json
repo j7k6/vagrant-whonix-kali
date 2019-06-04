@@ -1,7 +1,10 @@
 {
   "variables": {
+    "cloud_token": "{{env `ATLAS_TOKEN`}}",
     "ova_source": "{{env `WHONIX_OVA`}}",
-    "tag": "whonix-gateway"
+    "name": "whonix-gateway",
+    "tag": "j7k6/{{user `name`}}",
+    "version": "14.0.1.4.4"
   },
   "builders": [
     {
@@ -21,7 +24,7 @@
         "<left><enter><wait>",
         "<left><enter><wait>",
         "<enter><wait><enter><wait10><enter><wait240>",
-        "curl -fsSL 'https://raw.github.com/j7k6/vagrant-whonix-kali/master/packer/whonix/whonix-bootstrap.sh' | bash -s<enter><wait180>"
+        "curl -fsSL 'https://raw.github.com/j7k6/vagrant-whonix-kali/master/packer/scripts/whonix-bootstrap.sh' | bash -s<enter><wait180>"
       ]
     }
   ],
@@ -29,14 +32,20 @@
     [
       {
         "type": "vagrant",
-        "output": "{{user `tag`}}.box"
+        "output": "{{user `name`}}.box"
       },
       {
         "type": "shell-local",
         "inline": [
           "vagrant box remove --force '{{user `tag`}}' || true",
-          "vagrant box add --name '{{user `tag`}}' 'file://{{user `tag`}}.box'"
+          "vagrant box add --name '{{user `tag`}}' 'file://{{user `name`}}.box'"
         ]
+      },
+      {
+				"type": "vagrant-cloud",
+				"box_tag": "{{user `tag`}}",
+				"access_token": "{{user `cloud_token`}}",
+				"version": "{{user `version`}}"
       }
     ]
   ]

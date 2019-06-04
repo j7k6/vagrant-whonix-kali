@@ -1,7 +1,10 @@
 {
   "variables": {
+    "cloud_token": "{{env `ATLAS_TOKEN`}}",
     "ova_source": "{{env `KALI_OVA`}}",
-    "tag": "kali-linux"
+    "name": "kali-linux",
+    "tag": "j7k6/{{user `name`}}",
+    "version": "2019.2.0"
   },
   "builders": [
     {
@@ -16,7 +19,7 @@
         "<leftAltOn><leftCtrlOn><f3><leftAltOff><leftCtrlOff><wait30>",
         "root<enter><wait>",
         "toor<enter><wait10>",
-        "curl -fsSL 'https://raw.github.com/j7k6/vagrant-whonix-kali/master/packer/kali/kali-bootstrap.sh' | bash -s<enter><wait30>"
+        "curl -fsSL 'https://raw.github.com/j7k6/vagrant-whonix-kali/master/packer/scripts/kali-bootstrap.sh' | bash -s<enter><wait30>"
       ]
     }
   ],
@@ -24,14 +27,20 @@
     [
       {
         "type": "vagrant",
-        "output": "{{user `tag`}}.box"
+        "output": "{{user `name`}}.box"
       },
       {
         "type": "shell-local",
         "inline": [
           "vagrant box remove --force '{{user `tag`}}' || true",
-          "vagrant box add --name '{{user `tag`}}' 'file://{{user `tag`}}.box'"
+          "vagrant box add --name '{{user `tag`}}' 'file://{{user `name`}}.box'"
         ]
+      },
+      {
+				"type": "vagrant-cloud",
+				"box_tag": "{{user `tag`}}",
+				"access_token": "{{user `cloud_token`}}",
+				"version": "{{user `version`}}"
       }
     ]
   ]
