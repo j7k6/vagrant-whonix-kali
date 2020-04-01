@@ -9,20 +9,32 @@
       "type": "virtualbox-ovf",
       "source_path": "{{user `ova_source`}}",
       "format": "ova",
+      "communicator": "none",
+      "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
       "import_flags": ["--vsys", "0", "--eula", "accept", "--vsys", "1", "--eula", "accept"],
-      "vboxmanage": [
-        ["unregistervm", "Whonix-Workstation-CLI", "--delete"]
-      ],
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "boot_wait": "30s",
+      "vboxmanage": [["unregistervm", "Whonix-Workstation-CLI", "--delete"]],
+      "headless": true,
+      "boot_wait": "60s",
+      "boot_keygroup_interval": 10,
       "boot_command": [
-        "root<enter><wait>",
-        "changeme<enter><wait30>",
+        "user<enter><wait>",
+        "changeme<enter><wait15>",
         "<left><enter><wait>",
         "<left><enter><wait>",
-        "<enter><wait><enter><wait10><enter><wait240>",
-        "curl -fsSL 'https://raw.github.com/j7k6/vagrant-whonix-kali/master/packer/scripts/whonix-bootstrap.sh' | bash -s<enter><wait180>"
+        "<enter><wait><enter><wait5><enter><wait120><enter>",
+        "mkdir -p /home/user/.ssh<enter><wait>",
+        "curl -fsSL https://raw.github.com/hashicorp/vagrant/master/keys/vagrant.pub > /home/user/.ssh/authorized_keys<enter><wait10>",
+        "sudo su<enter><wait>",
+        "changeme<enter><wait2>",
+        "apt-get install -y openssh-server netcat<enter><wait30>",
+        "sed -i 's/GATEWAY_ALLOW_INCOMING_SSH=0/GATEWAY_ALLOW_INCOMING_SSH=1/' /etc/whonix_firewall.d/30_whonix_gateway_default.conf<enter><wait>",
+        "/usr/bin/whonix_firewall<enter><wait2>",
+        "systemctl enable ssh<enter><wait2>",
+        "install -m 0700 -D -T <(echo '#!/bin/sh -e'; echo 'dpkg-reconfigure openssh-server; rm /etc/rc.local'; echo 'exit 0') /etc/rc.local<enter><wait>",
+        "rm /etc/ssh/ssh_host_*<enter><wait>",
+        "truncate -s 0 /etc/machine-id<enter><wait>",
+        "shutdown -P now<enter>"
       ]
     }
   ],

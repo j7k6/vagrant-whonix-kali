@@ -9,15 +9,27 @@
       "type": "virtualbox-ovf",
       "source_path": "{{user `ova_source`}}",
       "format": "ova",
+      "headless": true,
       "communicator": "none",
       "guest_additions_mode": "disable",
       "virtualbox_version_file": "",
+      "import_flags": ["--vsys", "0", "--eula", "accept"],
       "boot_wait": "60s",
+      "boot_keygroup_interval": 10,
       "boot_command": [
-        "<leftAltOn><leftCtrlOn><f3><leftAltOff><leftCtrlOff><wait30>",
-        "root<enter><wait>",
-        "toor<enter><wait10>",
-        "curl -fsSL 'https://raw.github.com/j7k6/vagrant-whonix-kali/master/packer/scripts/kali-bootstrap.sh' | bash -s<enter><wait30>"
+        "<leftAltOn><leftCtrlOn><f3><leftAltOff><leftCtrlOff><wait2>",
+        "kali<enter><wait>",
+        "kali<enter><wait2>",
+        "mkdir -p /home/kali/.ssh<enter><wait>",
+        "curl -fsSL https://raw.github.com/hashicorp/vagrant/master/keys/vagrant.pub > /home/kali/.ssh/authorized_keys<enter><wait5>",
+        "sudo su<enter><wait>",
+        "kali<enter><wait2>",
+        "nmcli connection modify 'Wired connection 1' ipv4.method manual ipv4.addresses 10.152.152.11/18 ipv4.gateway 10.152.152.10 ipv4.dns 10.152.152.10<enter><wait>",
+        "systemctl enable ssh<enter><wait2>",
+        "install -m 0700 -D -T <(echo '#!/bin/sh -e'; echo 'dpkg-reconfigure openssh-server; rm /etc/rc.local'; echo 'exit 0') /etc/rc.local<enter><wait>",
+        "rm /etc/ssh/ssh_host_*<enter><wait>",
+        "truncate -s 0 /etc/machine-id<enter><wait>",
+        "shutdown -P now<enter>"
       ]
     }
   ],
