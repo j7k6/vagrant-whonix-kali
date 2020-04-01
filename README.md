@@ -11,10 +11,10 @@
 cd packer
 export PACKER_LOG=1
 
-export WHONIX_OVA=~/Downloads/Whonix-CLI-14.0.1.4.4.ova
+export WHONIX_OVA=~/Downloads/Whonix-CLI-15.0.0.9.4.ova
 packer build whonix.json
 
-export KALI_OVA=~/Downloads/kali-linux-2019.2-vbox-amd64.ova
+export KALI_OVA=~/Downloads/kali-linux-2020.1-vbox-amd64.ova
 packer build kali.json
 ```
 
@@ -22,8 +22,8 @@ packer build kali.json
 
 ```bash
 vagrant cloud auth login --token "<CLOUD_TOKEN>"
-vagrant cloud publish --force --release j7k6/whonix-gateway 14.0.1.4.4 virtualbox whonix-gateway.box
-vagrant cloud publish --force --release j7k6/kali-linux 2019.2.0 virtualbox kali-linux.box
+vagrant cloud publish --force --release j7k6/whonix-gateway 15.0.0.9.4 virtualbox whonix-gateway.box
+vagrant cloud publish --force --release j7k6/kali-linux 2020.1.0 virtualbox kali-linux.box
 ```
 
 ## Run Vagrant Boxes
