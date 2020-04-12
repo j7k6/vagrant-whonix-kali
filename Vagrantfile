@@ -36,7 +36,7 @@ Vagrant.configure("2") do |config|
       vb.gui = true
     end
 
-    kali.trigger.before :up do |trigger|
+    kali.trigger.after :up do |trigger|
       trigger.run = {
         inline: <<-SCRIPT
           bash -c "export HDD_UUID=$(VBoxManage showvminfo 'kali-linux' | grep 'SATA.*UUID' | awk '{ print $NF}' | awk -F')' '{print $1}'); \
